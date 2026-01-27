@@ -8,6 +8,7 @@ struct ContentView: View {
 	@State private var isProcessing = false
 	@State private var showAlert = false
 	@State private var alertMessage = ""
+	@State private var useFullExpand = true
 
 	var body: some View {
 		VStack(spacing: 20) {
@@ -32,14 +33,14 @@ struct ContentView: View {
 			VStack(spacing: 12) {
 				FileSelectionCard(
 					title: "Package File",
-					icon: "shippingbox",
+					icon: "shippingbox.fill",
 					url: pkgURL,
 					action: { pickPackage() }
 				)
 
 				FileSelectionCard(
 					title: "Output Folder",
-					icon: "folder",
+					icon: "folder.fill",
 					url: outputURL,
 					action: { pickFolder() }
 				)
@@ -99,7 +100,10 @@ struct ContentView: View {
 
 			Spacer()
 		}
-		.frame(minWidth: 520, minHeight: 480)
+		.frame(minWidth: 480, minHeight: 480)
+		.onDrop(of: [.fileURL], isTargeted: nil) { providers in
+			handleDrop(providers: providers)
+		}
 		.alert("Error", isPresented: $showAlert) {
 			Button("OK", role: .cancel) {}
 		} message: {
@@ -112,6 +116,26 @@ struct ContentView: View {
 	}
 
 	// MARK: - File Picking
+	
+	private func handleDrop(providers: [NSItemProvider]) -> Bool {
+		guard let provider = providers.first else { return false }
+		
+		_ = provider.loadObject(ofClass: URL.self) { url, error in
+			guard let url = url, error == nil else { return }
+			
+			DispatchQueue.main.async {
+				// Check if it's a .pkg file
+				if url.pathExtension.lowercased() == "pkg" {
+					self.pkgURL = url
+					self.log("􀅴 Dropped package: \(url.lastPathComponent)")
+				} else {
+					self.showError("􀁞 Input must be a .pkg file")
+				}
+			}
+		}
+		
+		return true
+	}
 
 	private func pickPackage() {
 		let panel = NSOpenPanel()
