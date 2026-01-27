@@ -13,9 +13,10 @@ struct ContentView: View {
 		VStack(spacing: 20) {
 			// Header
 			VStack(spacing: 8) {
-				Image(systemName: "shippingbox.fill")
-					.font(.system(size: 48))
-					.foregroundStyle(.blue)
+				Image("AppLogo")
+					.resizable()
+					.frame(width: 72, height: 72)
+					.shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2)
 				Text("Package Breaker")
 					.font(.title2)
 					.fontWeight(.semibold)
@@ -311,7 +312,7 @@ struct FileSelectionCard: View {
 			.buttonStyle(.borderedProminent)
 		}
 		.padding()
-		.background(Color(nsColor: .controlBackgroundColor))
+		.background(.quinary)
 		.clipShape(RoundedRectangle(cornerRadius: 10))
 	}
 }

@@ -24,7 +24,7 @@
             "scale" : 2.5600000000000005,
             "translation-in-points" : [
               0,
-              0
+              -32
             ]
           }
         }
@@ -60,7 +60,7 @@
             "scale" : 2.56,
             "translation-in-points" : [
               0,
-              0
+              -32
             ]
           }
         }
