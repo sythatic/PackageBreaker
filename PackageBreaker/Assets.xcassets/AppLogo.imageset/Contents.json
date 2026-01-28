@@ -13,6 +13,10 @@
       ],
       "filename" : "AppIcon-iOS-Dark-128x128@2x.png",
       "idiom" : "universal"
+    },
+    {
+      "filename" : "AppIcon-watchOS-Default-86x86@2x.png",
+      "idiom" : "watch"
     }
   ],
   "info" : {
